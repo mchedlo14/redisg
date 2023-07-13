@@ -1,0 +1,100 @@
+<template>
+  <!-- Sidebar component -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xl-2 col-12">
+        <Sidebar :loader='loader' :currentuser='currentUser.user_types' />
+      </div>
+      <div class="col-xl-10 col-12">
+        <HeaderComponent :currentuser="currentUser.user_types" :userName="currentUser.name" :requests="requests"
+          :farmer_notification='farmer_notification' />
+        <div class="container-fluid d-flex flex-column justify-content-center align-items-center p-0" style="min-height: calc(100vh - 120px);">
+
+          <main class="container-fluid main-content max-height-vh-100 h-100 border-radius-lg">
+            <div class="container-fluid py-4">
+            <div class="row">
+              <div class="col-12 ms-auto">
+                <div class="p-4">
+                  <router-view></router-view>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+      </div>
+    </div>
+
+  </div>
+</template>
+
+<script setup>
+
+import store from "../store";
+import router from "../router";
+import { ref, computed, onMounted, reactive, isProxy, toRaw } from 'vue'
+import Sidebar from '../components/Sidebar.vue'
+import HeaderComponent from '../components/HeaderComponent.vue'
+const currentUser = computed(() => store.state.user.data);
+const requests = ref([])
+const notification = ref([])
+const farmer_notification = ref([])
+
+
+
+let loader = ref(true)
+
+onMounted(() => {
+
+
+  store.dispatch('getUser')
+    .then(response => {
+      if (Object.keys(response).length > 0) {
+        loader.value = false
+      }
+    })
+    .catch(error => {
+      console.log('Request failed:', error);
+      if (error.response) {
+        console.log('Response status code:', error.response.status);
+      }
+    });
+
+
+  store.dispatch('getRequest')
+    .then(({ data }) => {
+      requests.value = data
+    })
+    .catch(({ response }) => {
+    })
+
+
+
+  store.dispatch('countFarmerNotification')
+    .then(({ data }) => {
+      farmer_notification.value = data[0].notification
+    })
+    .catch(({ response }) => {
+    })
+})
+
+
+
+</script>
+
+<style scoped>
+.custom-aside-bg {
+  background-color: #038877;
+}
+
+hr.custom-hr-line {
+  height: 2px !important;
+  max-width: 80% !important;
+  background-color: #FFF !important;
+  margin: 0 auto;
+}
+
+.nav-link.router-link-active {
+  background-color: #00AB89;
+}
+</style>

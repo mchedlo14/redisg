@@ -1,0 +1,265 @@
+<template>
+    <!-- burger bar -->
+    <nav class="container-fluid navbar d-block d-xl-none navbar-expand-xl navbar-light bg-light shadow-none">
+        <div class="container-fluid">
+            <button @click="toggleNav" class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                aria-label="Toggle navigation" style="color:#00AB89;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-list navbar-toggler-icon" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                </svg>
+            </button>
+            <div style="display: flex; align-items: center; justify-content: center;">
+                <li class="nav-item  pe-2 mt-1 me-3" style="list-style: none;">
+                    <router-link v-if="props.currentuser === 'farmer'" to="/my_request"
+                        class="nav-link p-0 position-relative text-body">
+                        <img src="../assets/img/icons/bell-icon.svg" />
+                        <span
+                            class="position-absolute top-5 start-100 translate-middle badge rounded-pill bg-danger border border-white small py-1 px-2">
+                            <span v-if="farmer_notification > 0" class="small">{{ props.farmer_notification }}</span>
+                            <span v-else class="small">0</span>
+                            <span class="visually-hidden">unread notifications</span>
+                        </span>
+                    </router-link>
+                    <router-link v-else to="/specialist_request" class="nav-link p-0 position-relative text-body">
+                        <img src="../assets/img/icons/bell-icon.svg" />
+                        <span
+                            class="position-absolute top-5 start-100 translate-middle badge rounded-pill bg-danger border border-white small py-1 px-2">
+                            <span class="small">{{ props.requests.length }}</span>
+                            <span class="visually-hidden">unread notifications</span>
+                        </span>
+                    </router-link>
+                </li>
+
+                <li class="nav-item mt-1 me-3 vr">
+                </li>
+
+                <li class="nav-item dropdown pe-2 ms-1 me-3" style="list-style: none;" data-bs-toggle="dropdown"
+                    data-bs-target="#dropdownMenu">
+                    <span class="badge" style="width: 44px; height: 40px; border: 1px solid #00AB89;">
+                        <img src="../assets/img/icons/account-circle.svg" />
+                        </span>
+                </li>
+
+                <ul class="dropdown-menu dropdown-menu-end p-2 me-sm-n4" style="right: 20px; top: 30px;"
+                    aria-labelledby="dropdownMenuButton" id="dropdownMenu">
+                    <li class="mb-2">
+                        <RouterLink to="/update_profile" class="dropdown-item border-radius-md">
+                            <div class="d-flex align-items-center py-1">
+                                <span class="material-icons"> account_circle</span>
+                                <div class="ms-2">
+                                    <h6 class="text-sm font-weight-normal my-auto">
+                                        Update Profile
+                                    </h6>
+                                </div>
+                            </div>
+                        </RouterLink>
+                    </li>
+                    <li class="mb-2">
+                        <a class="dropdown-item border-radius-md" @click="logout">
+                            <div class="d-flex align-items-center py-1">
+                                <span class="material-icons">logout</span>
+                                <div class="ms-2">
+                                    <h6 class="text-sm font-weight-normal my-auto">
+                                        Log Out
+                                    </h6>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="collapse navbar-collapse" :class="{ 'show': isNavOpen }">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <RouterLink to="/dashboard" @click="closeNav" class="nav-link active" aria-current="page" href="#">
+                            Dashboard
+                        </RouterLink>
+                    </li>
+                    <li class="nav-item" v-if="props.currentuser === 'farmer'">
+                        <RouterLink to="/my_farm" @click="closeNav" class="nav-link" href="#">My Farm</RouterLink>
+                    </li>
+                    <li class="nav-item" v-if="props.currentuser === 'farmer'">
+                        <RouterLink to="/specialist" @click="closeNav" class="nav-link" href="#">Find Specialist
+                        </RouterLink>
+                    </li>
+                    <li class="nav-item">
+                        <RouterLink :to="getRoute()" @click="closeNav" class="nav-link" href="#">My Request</RouterLink>
+                    </li>
+                    <li class="nav-item" v-if="props.currentuser === 'specialist'">
+                        <RouterLink to="/request_history" @click="closeNav" class="nav-link" href="#">Request History
+                        </RouterLink>
+                    </li>
+                    <li class="nav-item">
+                        <RouterLink to="/chat" @click="closeNav" class="nav-link" href="#">Chat</RouterLink>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Profile
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li>
+                                <RouterLink to="/update_profile" @click="closeNav" class="dropdown-item" href="#">Update
+                                    Profile</RouterLink>
+                            </li>
+                            <li><a @click="logout" class="dropdown-item" href="#">Log out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <nav class="container-fluid navbar navbar-main navbar-expand-xl mt-4 d-flex justify-content-between d-none d-xl-flex"
+        style="box-shadow: none;">
+        <div class="d-flex align-items-center">
+            <img src="../assets/img/icons/chevron-right.svg" alt="Chevron Right Icon" />
+            <h5 class="m-0 ms-2 text-dark font-weight-bold" style="font-size: 25px;">Dashboard</h5>
+        </div>
+        <ul class="navbar-nav d-flex align-items-center">
+            <li class="nav-item  pe-2 mt-1 me-3">
+                <router-link v-if="props.currentuser === 'farmer'" to="/my_request"
+                    class="nav-link p-0 position-relative text-body">
+                    <img src="../assets/img/icons/bell-icon.svg" />
+                    <span
+                        class="position-absolute top-5 start-100 translate-middle badge rounded-pill bg-danger border border-white small py-1 px-2">
+                        <span v-if="farmer_notification > 0" class="small">{{ props.farmer_notification }}</span>
+                        <span v-else class="small">0</span>
+                        <span class="visually-hidden">unread notifications</span>
+                    </span>
+                </router-link>
+                <router-link v-else to="/specialist_request" class="nav-link p-0 position-relative text-body">
+                    <img src="../assets/img/icons/bell-icon.svg" />
+                    <span
+                        class="position-absolute top-5 start-100 translate-middle badge rounded-pill bg-danger border border-white small py-1 px-2">
+                        <span class="small">{{ props.requests.length }}</span>
+                        <span class="visually-hidden">unread notifications</span>
+                    </span>
+                </router-link>
+            </li>
+
+            <li class="nav-item mt-1 me-3 vr">
+            </li>
+
+            <li class="nav-item  pe-2 ms-1 me-3">
+                <h3>Hi, {{ props.userName }}</h3>
+            </li>
+            <li class="nav-item dropdown pe-2 ms-1 me-3" data-bs-toggle="dropdown" data-bs-target="#dropdownMenu">
+                <span class="badge custom-badge">
+                    <img src="../assets/img/icons/account-circle.svg" />
+                    {{ props.currentuser }}</span>
+            </li>
+            <ul class="dropdown-menu dropdown-menu-end p-2 me-sm-n4" style="right: 20px; top: 30px;"
+                aria-labelledby="dropdownMenuButton" id="dropdownMenu">
+                <li class="mb-2">
+                    <RouterLink to="/update_profile" class="dropdown-item border-radius-md">
+                        <div class="d-flex align-items-center py-1">
+                            <span class="material-icons"> account_circle</span>
+                            <div class="ms-2">
+                                <h6 class="text-sm font-weight-normal my-auto">
+                                    Update Profile
+                                </h6>
+                            </div>
+                        </div>
+                    </RouterLink>
+                </li>
+                <li class="mb-2">
+                    <a class="dropdown-item border-radius-md" @click="logout">
+                        <div class="d-flex align-items-center py-1">
+                            <span class="material-icons">logout</span>
+                            <div class="ms-2">
+                                <h6 class="text-sm font-weight-normal my-auto">
+                                    Log Out
+                                </h6>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </ul>
+    </nav>
+</template>
+
+<script setup>
+import { defineProps, ref } from 'vue';
+import store from "../store";
+import router from "../router";
+
+const props = defineProps(['currentuser', 'requests', 'farmer_notification', 'userName',])
+
+
+let isNavOpen = ref(false);
+
+const toggleNav = () => {
+    isNavOpen.value = !isNavOpen.value;
+};
+
+const closeNav = () => {
+    isNavOpen.value = false;
+};
+
+
+const getRoute = () => {
+    if (props.currentuser === 'specialist') {
+        return '/specialist_request';
+    } else {
+        return '/my_request';
+    }
+}
+
+const logout = () => {
+
+    store.dispatch('logout')
+        .then(() => {
+            router.push({ name: 'login' })
+        })
+}
+
+</script>
+
+<style scoped>
+.custom-badge {
+    width: 120px;
+    height: 40px;
+    border: 1px solid #00AB89;
+    font-family: Roboto;
+    color: #00AB89;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    cursor: pointer;
+}
+
+.vr {
+    width: 2px !important;
+    height: 28px;
+    background-color: #E9ECEF;
+}
+
+h3 {
+    color: #343A40;
+    text-align: center;
+    font-family: Roboto;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+#mob_nav {
+    display: none;
+}
+
+@media (min-width: 992px) {
+    #mob_nav {
+        display: block;
+    }
+}
+</style>

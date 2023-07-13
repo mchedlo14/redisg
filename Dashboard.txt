@@ -1,0 +1,74 @@
+<template>
+  <div class="d-flex flex-column justify-content-center items-center text-center align-items-center mb-1">
+    <h1 class="h1 text-center text-dark fw-bold mb-4" style="font-size: 20px;">Welcome to Agronnect!</h1>
+    <p class="h1 text-center text-16 fw-normal mb-4 w-70 mx-auto" style="font-size: 16px; color: #343A40;">We're excited
+      to have you on board. To get started, let's
+      add your first farm to the dashboard. Adding a farm will allow you to access our comprehensive suite of tools and
+      services tailored to your farming needs. Click on the "Add Farm" button to begin the process and unlock a world of
+      farming possibilities. Let's start growing together with Agronnect!</p>
+      <router-link to="/my_farm">
+        <button type="button" class="btn text-center text-white text-12 fw-bold rounded-lg custom-btn">ADD FARM</button>
+      </router-link>
+  </div>
+  <!--  <Confirmation/>-->
+
+  <!--{{currentUser}}-->
+</template>
+
+<script setup>
+import store from "../store";
+import Confirmation from '../components/Confirmation.vue'
+
+import { ref, computed, onMounted, onUnmounted, isProxy, toRaw } from 'vue'
+const currentUser = computed(() => store.state.user.data);
+
+onMounted(() => {
+  localStorage.removeItem('userType')
+  store.dispatch('getUser')
+    .then(() => {
+      console.log(currentUser.value.user_types)
+      localStorage.setItem('userType', currentUser.value.user_types)
+
+    })
+})
+</script>
+
+<style scoped>
+.custom-btn{
+  background-color: #00AB89;
+  width: 185px;
+  height: 40px;
+}
+.dashboard-img-text {
+  font-size: 42px;
+  margin: 7px 0px 0px;
+  font-weight: bold;
+  letter-spacing: -.05rem;
+  font-weight: 600;
+}
+
+@media(max-width:600px) {
+  .dashboard-img-text {
+    font-size: 28px !important;
+  }
+}
+
+@media(max-width:520px) {
+  .dashboard-img-text {
+    font-size: 22px !important;
+  }
+}
+
+
+@media(max-width:420px) {
+  .dashboard-img-text {
+    font-size: 20px !important;
+  }
+}
+
+@media(max-width:380px) {
+  .dashboard-img-text {
+    font-size: 20px !important;
+  }
+}
+</style>

@@ -1,0 +1,103 @@
+<template>
+    <aside v-if="props.loader"
+        class="sidenav d-none d-md-flex flex-column justify-content-center align-items-center navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 custom-aside-bg"
+        id="sidenav-main">
+        <div class="spinner-border text-success sp_onn" role="status" id="sp">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </aside>
+    <aside v-else
+        class="sidenav d-none d-xl-block navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 ms-3 custom-aside-bg"
+        id="sidenav-main">
+        <div class="sidenav-header">
+            <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+                aria-hidden="true" id="iconSidenav"></i>
+            <router-link to="/" class="navbar-brand m-0 d-flex align-items-center justify-content-center">
+                <img src="../assets/img/Logo.svg" class="navbar-brand-img h-100" style="margin-right: 5px;" alt="main_logo">
+                <p class="text-white" style="font-size: 25px;">Agronnect</p>
+            </router-link>
+        </div>
+        <hr class="horizontal mt-0 mb-2 custom-hr-line">
+        <div class="collapse navbar-collapse  w-auto h-auto" id="sidenav-collapse-main">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <RouterLink to="/dashboard" class="nav-link text-white " aria-controls="dashboardsExamples"
+                        role="button" aria-expanded="false">
+                        <img v-if="$route.path === '/dashboard'" src="../assets/img/icons/dashboard-active-icon.svg" />
+                        <img v-else src="../assets/img/icons/dashboard-inactive-icon.svg" />
+                        <span class="nav-link-text ms-2 ps-1">Dashboards</span>
+                    </RouterLink>
+                </li>
+                <li class="nav-item" v-if="props.currentuser === 'farmer'">
+                    <RouterLink to="/my_farm" class="nav-link text-white " aria-controls="dashboardsExamples" role="button"
+                        aria-expanded="false">
+                        <img v-if="$route.path === '/my_farm'" src="../assets/img/icons/my-farm-active.svg" />
+                        <img v-else src="../assets/img/icons/my-farm-inactive.svg" />
+                        <span class="nav-link-text ms-2 ps-1">My Farm</span>
+                    </RouterLink>
+                </li>
+
+                <li class="nav-item" v-if="props.currentuser === 'farmer'">
+                    <RouterLink to="/specialist" class="nav-link text-white " aria-controls="dashboardsExamples"
+                        role="button" aria-expanded="false">
+                        <img v-if="$route.path === '/specialist'" src="../assets/img/icons/specialis-active-icon.svg" />
+                        <img v-else src="../assets/img/icons/specialist-inactive-icon.svg" />
+                        <span class="nav-link-text ms-2 ps-1">Specialist</span>
+                    </RouterLink>
+                </li>
+
+                <li class="nav-item" v-if="props.currentuser === 'farmer'">
+                    <router-link to="/my_request" class="nav-link text-white " aria-expanded="false">
+                        <img v-if="$route.path === '/my_request'" src="../assets/img/icons/arrow-right-active.svg" />
+                        <img v-else src="../assets/img/icons/arrow-right-inactive.svg" />
+                        <span class="nav-link-text ms-2 ps-1">My Request </span>
+                    </router-link>
+                </li>
+                <li class="nav-item" v-else>
+                    <router-link to="/specialist_request" class="nav-link text-white " aria-expanded="false">
+                        <i class="material-icons-round opacity-10">web</i>
+                        <span class="nav-link-text ms-2 ps-1">My Request </span>
+                    </router-link>
+                </li>
+                <li class="nav-item" v-if="props.currentuser === 'specialist'">
+                    <router-link to="/request_history" class="nav-link text-white " aria-expanded="false">
+                        <i class="material-icons-round opacity-10">history</i>
+                        <span class="nav-link-text ms-2 ps-1">Request History </span>
+                    </router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link to="/chat" class="nav-link text-white " aria-expanded="false">
+                        <img v-if="$route.path === '/chat'" src="../assets/img/icons/chat-active.svg" />
+                        <img v-else src="../assets/img/icons/chat-inactive.svg" />
+                        <span class="nav-link-text ms-2 ps-1">Chat</span>
+                    </router-link>
+                </li>
+            </ul>
+        </div>
+    </aside>
+</template>
+
+<script setup>
+import {defineProps} from 'vue';
+const props = defineProps(['loader','currentuser'])
+
+
+
+</script>
+
+<style scoped>
+.custom-aside-bg {
+    background-color: #038877;
+}
+
+hr.custom-hr-line {
+    height: 2px !important;
+    max-width: 80% !important;
+    background-color: #FFF !important;
+    margin: 0 auto;
+}
+
+.nav-link.router-link-active {
+    background-color: #00AB89;
+}
+</style>
