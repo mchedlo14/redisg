@@ -5,125 +5,29 @@
       </div>
     </div>
   </div>
-  <main class="main-content  mt-0">
-    <section id="list">
-      <!-- <div class="position-absolute text-center w-100 left-0 d-sm-none"  style="height: 280px !important;" id="agro_mobile">
-        <img  src="../assets/img/mobile_cover.png" style="height: 200px;!important;"  alt="not found"
-              class="img-fluid flex justify-content-center w-100">
-      </div> -->
-
-      <!-- <div class="page-header min-vh-100">
-        <div class="container">
-          <div class="row">
-            <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 start-0 text-center p-0 justify-content-center flex-column" id="image">
-           <div class="position-relative d-flex flex-column justify-content-center">
-              <img src="../assets/img/agronet.jpeg" alt="logo">
-           </div>
-
-
-            </div>
-            <div class="col-xl-4 col-lg-5 col-md-7d-flex flex-column ms-auto me-auto ms-lg-auto me-lg-5">
-              <div class="card card-plain">
-                <div class="card-header text-center mt-sm-0 mt-6" id="header_text">
-                  <h4 class="font-weight-bolder">Log In Agronnect</h4>
-                </div>
-                <div class="card-body">
-
-                  <form role="form" method="POST" @submit.prevent="login" id="login_form">
-                    <div v-if="errorMsg" class="text-danger mb-4">
-
-                      <div class="alert alert-primary alert-dismissible text-white fade show" role="alert">
-                          <span class="alert-icon align-middle">
-                          </span>
-                        <span class="alert-text">{{ errorMsg }}</span>
-                        <button @click="errorMsg = ''" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Email</label>
-                      <input type="email" class="form-control border ps-2" placeholder="Enter Your Email Address" v-model="user.email">
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Password</label>
-                      <input type="password" class="form-control ps-2 border" placeholder="Enter Your Password"  v-model="user.password">
-                    </div>
-                    <div class="text-center">
-                      <button type="submit"
-                              :disabled="loading"
-                              :class="{
-                                'cursor-not-allowed': loading,
-                                'hover:bg-indigo-500': loading,
-                              }"
-                              class="btn btn-lg text-white  btn-lg w-100 mt-4 mb-0"
-                              style="background: linear-gradient(180deg, rgba(126, 254, 169, 0.2) 0%, rgba(70, 252, 132, 0.2) 100%), #76DB98;">
-                        <svg
-                            v-if="loading"
-                            class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                        >
-                          <circle
-                              class="opacity-25"
-                              cx="12"
-                              cy="12"
-                              r="10"
-                              stroke="currentColor"
-                              stroke-width="4"
-                          ></circle>
-                          <path
-                              class="opacity-75"
-                              fill="currentColor"
-                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                          ></path>
-                        </svg>
-
-                        Sign in
-
-                      </button>
-                    </div>
-                  </form>
-                </div>
-                <div class="card-footer text-center pt-0 px-lg-2 px-1" id="login_to_register">
-                  <p class="mb-4 text-sm mx-auto">
-                    Don't have an account?
-                    <router-link to="registration" style="color: rgb(37, 150, 255); cursor: pointer" class="font-weight-bold">Create One</router-link>
-                  </p>
-                </div>
-              </div>
-                <div class=" text-center align-items-center bottom-0 d-sm-none"  id="agro_mobile_container">
-                  <img  src="../assets/img/agro_mobile.png"  alt="not found" style="width: 64.86px;height: 70.96px;"
-                        class="img-fluid flex justify-content-center">
-                </div>
-            </div>
-          </div>
-        </div>
-      </div> -->
-
-      <form class="container-fluid min-vh-100 p-0 m-0 custom-bg" method="POST" @submit.prevent="login"
-        style="display: flex; justify-content: center; align-items: center;">
-        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    <section id="list"> 
+      <form class="container-fluid min-vh-100 p-0 m-0 d-flex justify-content-center align-items-center custom-bg"
+        method="POST" @submit.prevent="login">
+        <div class="d-flex justify-content-center align-items-center flex-column"
+          style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
           <div class="container-fluid" style="margin-top: 180px;">
             <img src="../assets/img/icons/login-logo.svg" alt="logo" />
           </div>
 
           <div class="mt-6">
-            <p style="color: #00AB89;font-family: Roboto; font-size: 14px; font-weight: 700;line-height: normal;">LOGIN
+            <p class="custom-login-txt">LOGIN
             </p>
           </div>
 
-          <div class="container-fluid px-4" style="display: flex; justify-content: center; flex-direction: column;">
-            <div class="inputBox" style="position: relative;">
+          <div class="container-fluid px-4 d-flex flex-column justify-content-center">
+            <div class="inputBox">
               <input type="text" class="border" required="required" v-model="user.email">
               <span>Email</span>
               <img style="position: absolute; left: 10px; top: 0; bottom: 0; margin: auto;"
                 src="../assets/img/icons/email-login-icon.svg" alt="email icon" />
             </div>
 
-            <div class="inputBox" style="position: relative;">
+            <div class="inputBox">
               <input type="password" class="border" required="required" v-model="user.password">
               <span>Password</span>
               <img style="position: absolute; left: 10px; top: 0; bottom: 0; margin: auto;"
@@ -132,20 +36,20 @@
 
           </div>
 
-          <div class="container-fluid" style="display: flex; justify-content: end; padding-right: 20px;">
-            <p style="padding-top: 8px; color: #343A40; font-size: 13px; font-weight: 700; cursor: pointer;">Forgot
+          <div class="container-fluid d-flex justify-content-end custom-forgot-text">
+            <p>Forgot
               Password?</p>
           </div>
 
-          <div style="width: 88%; margin: 0 auto;">
+          <div class="custom-login-wrapper">
             <button type="submit" class="btn login-btn" :disabled="loading">LOG IN</button>
           </div>
 
-          <div class="container-fluid" style="display: flex; justify-content: center; align-items: center;">
+          <div class="container-fluid d-flex justify-content-center align-items-center">
             <p>
               Don’t have an account?
               <router-link to="registration">
-                <span style="color: #00AB89; font-size: 16px; cursor: pointer;"> Sign up</span>
+                <span class="custom-span"> Sign up</span>
               </router-link>
             </p>
           </div>
@@ -161,7 +65,6 @@
 
       </form>
     </section>
-  </main>
 </template>
 
 <script setup>
@@ -208,10 +111,24 @@ function login() {
   height: 40px;
 }
 
+.custom-login-txt {
+  color: #00AB89;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: normal;
+}
+
 .inputBox {
   position: relative;
   width: 100%;
   margin-top: 20px;
+}
+
+.custom-span {
+  color: #00AB89;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .inputBox input {
@@ -221,6 +138,23 @@ function login() {
   border-radius: 5px;
   outline: none;
 
+}
+
+.custom-login-wrapper {
+  width: 88%;
+  margin: 0 auto;
+}
+
+.custom-forgot-text {
+  padding-right: 20px;
+}
+
+.custom-forgot-text p {
+  padding-top: 8px;
+  color: #343A40;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 .inputBox input:focus {
@@ -255,5 +189,4 @@ function login() {
   background-color: #00AB89;
   color: #fff;
   border-radius: 8px;
-}
-</style>
+}</style>
